@@ -1,6 +1,6 @@
 const Renderer = (() => {
   const mainBody = document.querySelector('main');
-  // console.log(mainBody)
+  const navBar = document.querySelector('nav');
   const createCell = (todo) => {
     const cell = document.createElement('div');
     cell.classList.add('todo');
@@ -26,9 +26,9 @@ const Renderer = (() => {
     return cell;
   }
 
-  const renderTodo = (todo) => {
+  const renderTodo = (todo, container) => {
     const cell = createCell(todo);
-    mainBody.appendChild(cell);
+    container.appendChild(cell);
     renderCompleteState(todo);
   };
 
@@ -40,20 +40,53 @@ const Renderer = (() => {
     completeState.textContent = todo.completed ? '\u2713' : '';
   };
 
-  const renderProject = (projects) => {
-    for (const item of projects.todoList) {
-      renderTodo(item);
+  const renderProject = (project) => {
+    const container = document.createElement('div');
+    container.dataset.id = project.id;
+    container.classList.add('project');
+    for (const item of project.todoList) {
+      renderTodo(item, container);
     }
+    mainBody.appendChild(container);
+  }
+
+  const renderNav = (projects) => {
+    const todoAdd = document.createElement('button');
+    todoAdd.classList.add('todo-button');
+    todoAdd.textContent = "Add New Task";
+    navBar.appendChild(todoAdd);
+    renderProjectList(projects);
+  }
+
+  const renderProjectList = (projects) => {
+    const projectsText = document.createElement('div');
+    projectsText.textContent = 'Projects';
+    navBar.appendChild(projectsText);
+    const projectContainer = document.createElement('div');
+    for(const item of projects) {
+      const project = document.createElement('div');
+      project.classList.add('project-button');
+      project.dataset.id = item.id;
+      project.textContent = item.name;
+      projectContainer.appendChild(project);
+    }
+    navBar.appendChild(projectContainer);
   }
 
   const clear = () => {
     mainBody.innerHTML = '';
   };
 
+  const init = (projects) => {
+    renderProject(projects[0]);
+    renderNav(projects);
+  }
+
   return {
     renderProject,
     renderCompleteState,
     clear,
+    init,
   };
 
 })();

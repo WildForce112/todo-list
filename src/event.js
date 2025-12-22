@@ -1,7 +1,7 @@
 import { TodoRenderer } from "./render.js"
 
 function handleTodoEvents() {
-  const mainBody = document.querySelector('main');
+  const mainBody = document.querySelector('#main-body');
   if (!mainBody) return;
 
   mainBody.addEventListener('click', (e) => {

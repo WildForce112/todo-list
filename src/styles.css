@@ -1,3 +1,26 @@
+* {
+margin: 0;
+padding: 0;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.5vw 1vw;
+  box-sizing: border-box;
+  width: 10vw;
+}
+
+main {
+  position: relative;
+  left: 10vw;
+}
+
 body {
   font-size: calc(0.05vw + 16px);
 }
