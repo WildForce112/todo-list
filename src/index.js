@@ -1,25 +1,21 @@
 import "./styles.css";
-import { HomePageLoad, MenuPageLoad, AboutPageLoad, ClearPage } from "./pageloader.js";
+import { createNewTodo, changeTodoCompleteState } from "./todoLogic.js";
+import { createNewProject, addTodoToProject } from "./projectLogic.js"
+import { Renderer } from './render.js';
+import { handleTodoEvents } from "./event.js";
 
-(function (){
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest('button');
-    if(target){
-      ClearPage();
-      if(target.textContent.includes("Home")){
-        HomePageLoad();
-      }      
-      if(target.textContent.includes("Menu")){
-        MenuPageLoad();
-      }
-      if(target.textContent.includes("About")){
-        AboutPageLoad();
-      }
+(function () {
+  const defaultProject = createNewProject("Default")
 
-    }
-  })
+  const todo1 = createNewTodo("1", "2", "3", "4", "5", "6");
+  const todo2 = createNewTodo("3", "4", "5", "6", "7", "8");
+
+  addTodoToProject(todo1, defaultProject);
+  addTodoToProject(todo2, defaultProject);
+
+  console.log(defaultProject);
+  changeTodoCompleteState(todo1);
+  Renderer.renderProject(defaultProject);
+
+  handleTodoEvents();
 })();
-
-HomePageLoad();
-// MenuPageLoad();
-// AboutPageLoad();
