@@ -61,6 +61,7 @@ const Renderer = (() => {
   const renderProjectList = (projects) => {
     const projectsText = document.createElement('div');
     projectsText.textContent = 'Projects';
+    projectsText.classList.add("project-text");
     navBar.appendChild(projectsText);
     const projectContainer = document.createElement('div');
     for(const item of projects) {
