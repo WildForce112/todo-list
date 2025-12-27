@@ -1,8 +1,18 @@
+import { createNewTodo } from "./todoLogic";
+
 class project {
   constructor(name, todoList) {
     this.name = name;
     this.todoList = todoList;
     this.id = crypto.randomUUID();
+  }
+
+  addTodoToProject(todo){
+    this.todoList.push(todo);
+  }
+
+  getTodoFromProject(id) {
+    return this.todoList.find((todo) => todo.id == id);
   }
 }
 
@@ -13,8 +23,23 @@ function createNewProject(name) {
   )
 }
 
-function addTodoToProject(todo, project) {
-  project.todoList.push(todo);
+function getProjectFromList(id) {
+  return projects.find((element) => element.id == id);
 }
 
-export {createNewProject, addTodoToProject}
+
+
+const projects = [];
+const defaultProject = createNewProject("Default")
+projects.push(defaultProject);
+const todo1 = createNewTodo("1", "2", "3", "4", "5", "6");
+const todo2 = createNewTodo("3", "4", "5", "6", "7", "8");
+defaultProject.addTodoToProject(todo1);
+defaultProject.addTodoToProject(todo2);
+const defaultProject2 = createNewProject("Default2")
+projects.push(defaultProject2);
+defaultProject2.addTodoToProject(todo2);
+defaultProject2.addTodoToProject(todo1);
+
+
+export {project, createNewProject, projects, getProjectFromList}

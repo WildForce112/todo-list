@@ -35,12 +35,12 @@ const Renderer = (() => {
   const renderCompleteState = (todo) => {
     const cell = document.querySelector(`.todo[data-id="${todo.id}"]`);
     if (!cell) return;
-
     const completeState = cell.querySelector('.complete-state');
     completeState.textContent = todo.completed ? '\u2713' : '';
   };
 
   const renderProject = (project) => {
+    clear();
     const container = document.createElement('div');
     container.dataset.id = project.id;
     container.classList.add('project');

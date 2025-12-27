@@ -9,6 +9,10 @@ class todo {
     this.completed = false;
     this.id = crypto.randomUUID();
   }
+
+  changeTodoCompleteState() {
+    this.completed = !this.completed;
+  }
 }
 
 function createNewTodo(title, description, dueDate, priority, notes, checklist) {
@@ -39,8 +43,5 @@ function changeTodoNotes(todo, newNotes) {
 function changeTodoCheckList(todo, newCheckList) {
   todo.checklist = newCheckList;
 }
-function changeTodoCompleteState(todo) {
-  todo.completed = !todo.completed;
-}
 
-export {createNewTodo, changeTodoCompleteState}
+export {todo, createNewTodo}
