@@ -1,6 +1,5 @@
 import { Renderer } from "./render.js"
-import { changeTodoCompleteState } from "./todoLogic.js";
-import { project, getProjectFromList } from "./projectLogic.js";
+import { getProjectFromList } from "./projectLogic.js";
 
 function handleTodoEvents() {
   document.body.addEventListener('click', (e) => {
@@ -15,7 +14,6 @@ function handleTodoEvents() {
       Renderer.renderCompleteState(targetTodo);
     }
     else if(e.target.closest('nav')){
-      console.log(1);
       const button = e.target.closest(".project-button");
       if(!button) return;
       const projectID = button.dataset.id;

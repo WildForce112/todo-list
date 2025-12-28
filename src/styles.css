@@ -26,6 +26,10 @@ body {
   font-size: calc(0.05vw + 16px);
 }
 
+.project{
+  padding: 1vw;
+}
+
 .todo {
   display: flex;
   align-items: center;

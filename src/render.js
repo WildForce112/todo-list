@@ -8,6 +8,7 @@ const Renderer = (() => {
 
     const completeState = document.createElement('div');
     completeState.classList.add('complete-state');
+    completeState.textContent = todo.completed ? '\u2713' : '';
 
     const info = document.createElement('div');
     info.classList.add('info');
@@ -29,10 +30,9 @@ const Renderer = (() => {
   const renderTodo = (todo, container) => {
     const cell = createCell(todo);
     container.appendChild(cell);
-    renderCompleteState(todo);
   };
 
-  const renderCompleteState = (todo) => {
+  const renderCompleteState = (todo) => { // not rendering right, need more fix
     const cell = document.querySelector(`.todo[data-id="${todo.id}"]`);
     if (!cell) return;
     const completeState = cell.querySelector('.complete-state');
@@ -44,10 +44,11 @@ const Renderer = (() => {
     const container = document.createElement('div');
     container.dataset.id = project.id;
     container.classList.add('project');
+    mainBody.appendChild(container);
+
     for (const item of project.todoList) {
       renderTodo(item, container);
     }
-    mainBody.appendChild(container);
   }
 
   const renderNav = (projects) => {
