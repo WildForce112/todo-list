@@ -1,13 +1,11 @@
+
 class todo {
-  constructor(title, description, dueDate, priority, notes, checklist, id){
+  constructor(title, dueDate){
     this.title = title;
-    this.description = description;
     this.dueDate = dueDate;
-    this.priority = priority;
-    this.notes = notes;
-    this.checklist = checklist;
     this.completed = false;
     this.id = crypto.randomUUID();
+    this.priority = 0;
   }
 
   changeTodoCompleteState() {
@@ -15,33 +13,10 @@ class todo {
   }
 }
 
-function createNewTodo(title, description, dueDate, priority, notes, checklist) {
+function createNewTodo(title, dueDate) {
   return new todo(title,
-    description,
     dueDate,
-    priority,
-    notes,
-    checklist,
   )
-}
-
-function changeTodoTitle(todo, newTitle) {
-  todo.title = newTitle;
-}
-function changeTodoDescription(todo, newDescription) {
-  todo.description = newDescription;
-}
-function changeTodoDueDate(todo, newDueDate) {
-  todo.dueDate = newDueDate;
-}
-function changeTodoPriority(todo, newPriority) {
-  todo.priority = newPriority;
-}
-function changeTodoNotes(todo, newNotes) {
-  todo.notes = newNotes;
-}
-function changeTodoCheckList(todo, newCheckList) {
-  todo.checklist = newCheckList;
 }
 
 export {todo, createNewTodo}

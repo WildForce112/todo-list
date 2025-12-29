@@ -1,24 +1,74 @@
 import { Renderer } from "./render.js"
 import { getProjectFromList } from "./projectLogic.js";
+import { createNewTodo } from "./todoLogic.js";
+
+const formDisplay = document.querySelector('.hidden');
+const form = document.querySelector('#todo-form');
+const title = form.querySelector('#title');
+const dueDate = form.querySelector('#due');
+
+function resetForm () {
+  title.value = '';
+  dueDate.value = '';
+  formDisplay.style.display = 'none';
+}
+
+function getProject(e) {
+  const target = e.target;
+  const projectID = target.closest(".project").dataset.id;
+  return getProjectFromList(projectID)
+}
+
+function getTodo(e, project) {
+  const target = e.target;
+  const todoID = target.closest(".todo").dataset.id;
+  return project.getTodoFromProject(todoID)
+}
+
+function getProjectFromButton(e) {
+  const target = e.target;
+  const projectID = target.closest(".project-button").dataset.id;
+  return getProjectFromList(projectID)
+}
 
 function handleTodoEvents() {
+  const mainProject = getProjectFromList(document.querySelector('main>.project').dataset.id);
   document.body.addEventListener('click', (e) => {
     if(e.target.closest('main')){
       const button = e.target.closest('.complete-state');
       if (!button) return;
-      const projectID = e.target.closest(".project").dataset.id
-      const todoID = e.target.closest(".todo").dataset.id;
-      const targetProject = getProjectFromList(projectID);
-      const targetTodo = targetProject.getTodoFromProject(todoID);
+      const targetProject = getProject(e);
+      const targetTodo = getTodo(e, targetProject);
       targetTodo.changeTodoCompleteState();
       Renderer.renderCompleteState(targetTodo);
     }
     else if(e.target.closest('nav')){
-      const button = e.target.closest(".project-button");
-      if(!button) return;
-      const projectID = button.dataset.id;
-      const targetProject = getProjectFromList(projectID);
-      Renderer.renderProject(targetProject);
+      if(e.target.closest(".project-button")){
+        const targetProject = getProjectFromButton(e);
+        Renderer.renderProject(targetProject);
+      }
+      else if(e.target.closest('.todo-button')){
+        formDisplay.style.display = form.style.display == "flex" ? "none" : "flex";
+      }
+    }
+    else if(e.target.closest('#todo-form>:last-child')){
+      switch (e.target.textContent) {
+        case 'Close': {
+          e.preventDefault();
+          resetForm();
+        }
+        case 'Add': {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const titleValue = title.value;
+            const dueValue = dueDate.value;
+            const newTodo = createNewTodo(titleValue, new Date(dueValue));
+            mainProject.addTodoToProject(newTodo);
+            Renderer.renderProject(mainProject);
+            resetForm();
+          })
+        }
+      }
     }
   });
 }

@@ -1,3 +1,5 @@
+import { compareAsc, format } from "date-fns";
+
 const Renderer = (() => {
   const mainBody = document.querySelector('main');
   const navBar = document.querySelector('nav');
@@ -19,7 +21,7 @@ const Renderer = (() => {
 
     const dueDate = document.createElement('div');
     dueDate.classList.add('due-date');
-    dueDate.textContent = todo.dueDate;
+    dueDate.textContent = format(todo.dueDate, "dd-MM-yyyy");
 
     info.append(title, dueDate);
     cell.append(completeState, info);
