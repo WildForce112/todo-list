@@ -29,15 +29,15 @@ function getProjectFromList(id) {
 }
 
 
-
+const tomorrow = new Date();
 const projects = [];
 const Personal = createNewProject("Personal");
-Personal.addTodoToProject(createNewTodo("Buy groceries", new Date(2026, 0, 1)));
-Personal.addTodoToProject(createNewTodo("Workout 30 minutes", new Date(2026, 0, 2)));
+Personal.addTodoToProject(createNewTodo("Buy groceries", new Date()));
+Personal.addTodoToProject(createNewTodo("Workout 30 minutes", tomorrow.setHours(tomorrow.getHours() + 27)));
 projects.push(Personal);
 const School = createNewProject("School");
-School.addTodoToProject(createNewTodo("Finish math homework", new Date(2026, 0, 4)));
-School.addTodoToProject(createNewTodo("Prepare presentation", new Date(2026, 0, 7)));
+School.addTodoToProject(createNewTodo("Finish math homework", tomorrow.setHours(tomorrow.getHours() + 57)));
+School.addTodoToProject(createNewTodo("Prepare presentation", tomorrow.setDate(tomorrow.getDate() + 6)));
 projects.push(School);
 console.log(new Date());
 // console.log((new Date(2026, 0, 2) - new Date(2026, 0, 1))/24/3600/1000)

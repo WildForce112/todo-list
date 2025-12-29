@@ -1,5 +1,6 @@
 import { compareAsc, format } from "date-fns";
 
+
 const Renderer = (() => {
   const mainBody = document.querySelector('main');
   const navBar = document.querySelector('nav');
@@ -23,6 +24,24 @@ const Renderer = (() => {
     dueDate.classList.add('due-date');
     dueDate.textContent = format(todo.dueDate, "dd-MM-yyyy");
 
+    const now = new Date();
+    const timeleft = (todo.dueDate - now)/24/60/60/1000;
+
+    if(timeleft < 1){
+      todo.priority = 3;
+    }
+    else if(timeleft < 2){
+      todo.priority = 2;
+    }
+    else if(timeleft < 5){
+      todo.priority = 1;
+    }
+    else {
+      todo.priority = 0;
+    }
+
+    renderPriority(cell, todo);
+
     info.append(title, dueDate);
     cell.append(completeState, info);
 
@@ -34,12 +53,35 @@ const Renderer = (() => {
     container.appendChild(cell);
   };
 
-  const renderCompleteState = (todo) => { // not rendering right, need more fix
+  const renderCompleteState = (todo) => {
     const cell = document.querySelector(`.todo[data-id="${todo.id}"]`);
     if (!cell) return;
     const completeState = cell.querySelector('.complete-state');
     completeState.textContent = todo.completed ? '\u2713' : '';
   };
+
+  const renderPriority = (cell, todo) => {
+    // const cell = document.querySelector(`.todo[data-id="${todo.id}"]`);
+    // if (!cell) return;
+    switch (todo.priority) {
+      case 3: {
+        cell.style.backgroundColor = "red";
+        return;
+      }
+      case 2: {
+        cell.style.backgroundColor = "orange";
+        return;
+      }
+      case 1: {
+        cell.style.backgroundColor = "yellow";
+        return;
+      }
+      case 0: {
+        cell.style.backgroundColor = "green";
+        return;
+      }
+    }
+  }
 
   const renderProject = (project) => {
     clear();
