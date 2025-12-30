@@ -36,13 +36,24 @@ function handleTodoEvents() {
   const mainProject = getProjectFromList(document.querySelector('main>.project').dataset.id);
   document.body.addEventListener('click', (e) => {
     if(e.target.closest('main')){
-      const button = e.target.closest('.complete-state');
-      if (!button) return;
-      const targetProject = getProject(e);
-      const targetTodo = getTodo(e, targetProject);
-      targetTodo.changeTodoCompleteState();
-      populateStorage(projects)
-      Renderer.renderCompleteState(targetTodo);
+      if(e.target.closest('.complete-state')){
+        const button = e.target.closest('.complete-state');
+        if (!button) return;
+        const targetProject = getProject(e);
+        const targetTodo = getTodo(e, targetProject);
+        targetTodo.changeTodoCompleteState();
+        populateStorage(projects)
+        Renderer.renderCompleteState(targetTodo);
+      }
+      else if(e.target.closest('.delete-button')){
+        const button = e.target.closest('.delete-button');
+        if (!button) return;
+        const targetProject = getProject(e);
+        const targetTodo = getTodo(e, targetProject);
+        targetProject.deleteTodoFromProject(targetTodo);
+        populateStorage(projects);
+        Renderer.renderProject(targetProject);
+      }
     }
     else if(e.target.closest('nav')){
       if(e.target.closest(".project-button")){

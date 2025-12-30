@@ -105,14 +105,19 @@ body {
 
 .todo {
   display: flex;
-  /* width: 85vw; */
+  border: solid 2px black;
+
+}
+
+.container {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5vh 1vw;
-  border: solid 2px black;
+  flex: 20;
 }
 
-.todo>.complete-state {
+.container>.complete-state {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,6 +137,17 @@ body {
   font-size: 1em;
   padding: 0.5rem;
   border-radius: 1rem;
+}
+
+.delete-button {
+  flex: 1;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+  border-left: solid 1px black;
 }
 
 .project-text {

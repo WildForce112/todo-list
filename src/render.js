@@ -8,6 +8,9 @@ const Renderer = (() => {
     const cell = document.createElement('div');
     cell.classList.add('todo');
     cell.dataset.id = todo.id;
+    
+    const container = document.createElement('div');
+    container.classList.add('container');
 
     const completeState = document.createElement('div');
     completeState.classList.add('complete-state');
@@ -47,8 +50,13 @@ const Renderer = (() => {
 
     renderPriority(cell, todo);
 
+    const deleteBtn = document.createElement('div');
+    deleteBtn.classList.add("delete-button");
+    deleteBtn.textContent = "\u2715"
+
     info.append(title, timeLeftDisplay, dueDate);
-    cell.append(completeState, info);
+    container.append(completeState, info);
+    cell.append(container, deleteBtn);
 
     return cell;
   }

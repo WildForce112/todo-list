@@ -17,6 +17,10 @@ class project {
   getTodoFromProject(id) {
     return this.todoList.find((todo) => todo.id == id);
   }
+
+  deleteTodoFromProject(todo){
+    this.todoList = (this.todoList.filter((element) => element.id !== todo.id));
+  }
 }
 
 function createNewProject(name, todoList, id) {
