@@ -1,4 +1,4 @@
-import { compareAsc, format } from "date-fns";
+import { format } from "date-fns";
 
 
 const Renderer = (() => {
@@ -20,12 +20,17 @@ const Renderer = (() => {
     title.classList.add('title');
     title.textContent = todo.title;
 
-    const dueDate = document.createElement('div');
-    dueDate.classList.add('due-date');
-    dueDate.textContent = format(todo.dueDate, "dd-MM-yyyy");
-
     const now = new Date();
     const timeleft = (todo.dueDate - now)/24/60/60/1000;
+
+    const timeLeftDisplay = document.createElement('div');
+    timeLeftDisplay.classList.add('time-left');
+    if(timeleft > 0) timeLeftDisplay.textContent = `Due in ${Math.round(timeleft)} days`;
+    else timeLeftDisplay.textContent = `Overdue by ${Math.round(timeleft) * -1} days`;
+
+    const dueDate = document.createElement('div');
+    dueDate.classList.add('due-date');
+    dueDate.textContent = `Due Date: ${format(todo.dueDate, "dd-MM-yyyy")}`;
 
     if(timeleft < 1){
       todo.priority = 3;
@@ -42,7 +47,7 @@ const Renderer = (() => {
 
     renderPriority(cell, todo);
 
-    info.append(title, dueDate);
+    info.append(title, timeLeftDisplay, dueDate);
     cell.append(completeState, info);
 
     return cell;
@@ -61,8 +66,6 @@ const Renderer = (() => {
   };
 
   const renderPriority = (cell, todo) => {
-    // const cell = document.querySelector(`.todo[data-id="${todo.id}"]`);
-    // if (!cell) return;
     switch (todo.priority) {
       case 3: {
         cell.style.backgroundColor = "red";

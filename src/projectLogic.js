@@ -1,11 +1,13 @@
 import { createNewTodo } from "./todoLogic";
+import { storageAvailable, populateStorage, getStorage } from "./storage.js";
+import { parse } from "date-fns";
 
 
 class project {
-  constructor(name, todoList) {
+  constructor(name, todoList, id = crypto.randomUUID()) {
     this.name = name;
     this.todoList = todoList;
-    this.id = crypto.randomUUID();
+    this.id = id;
   }
 
   addTodoToProject(todo){
@@ -17,10 +19,11 @@ class project {
   }
 }
 
-function createNewProject(name) {
+function createNewProject(name, todoList, id) {
   return new project(
     name,
-    []
+    todoList,
+    id,
   )
 }
 
@@ -28,19 +31,32 @@ function getProjectFromList(id) {
   return projects.find((element) => element.id == id);
 }
 
+function parseProjects(parsedObject){
+  for(const project of parsedObject) {
+    const newProject = createNewProject(project["name"],[],project["id"])
+    for(const todo of project.todoList) {
+      const newTodo = createNewTodo(todo["title"], todo["dueDate"], todo["completed"], todo["id"])
+      newProject.addTodoToProject(newTodo);
+    }
+    projects.push(newProject);
+  }
+}
 
-const tomorrow = new Date();
-const projects = [];
-const Personal = createNewProject("Personal");
-Personal.addTodoToProject(createNewTodo("Buy groceries", new Date()));
-Personal.addTodoToProject(createNewTodo("Workout 30 minutes", tomorrow.setHours(tomorrow.getHours() + 27)));
-projects.push(Personal);
-const School = createNewProject("School");
-School.addTodoToProject(createNewTodo("Finish math homework", tomorrow.setHours(tomorrow.getHours() + 57)));
-School.addTodoToProject(createNewTodo("Prepare presentation", tomorrow.setDate(tomorrow.getDate() + 6)));
-projects.push(School);
-console.log(new Date());
-// console.log((new Date(2026, 0, 2) - new Date(2026, 0, 1))/24/3600/1000)
+var projects = [];
+const day = new Date();
 
+if(!getStorage()){
+  const Personal = createNewProject("Personal");
+  Personal.addTodoToProject(createNewTodo("Buy groceries", day.setDate(day.getDate())));
+  Personal.addTodoToProject(createNewTodo("Workout 30 minutes", day.setHours(day.getHours() + 27)));
+  projects.push(Personal);
+  const School = createNewProject("School");
+  School.addTodoToProject(createNewTodo("Finish math homework", day.setHours(day.getHours() + 57)));
+  School.addTodoToProject(createNewTodo("Prepare presentation", day.setDate(day.getDate() + 6)));
+  projects.push(School);
+}
+else {
+  parseProjects(getStorage());
+}
 
 export {project, createNewProject, projects, getProjectFromList}

@@ -1,10 +1,9 @@
-
 class todo {
-  constructor(title, dueDate){
+  constructor(title, dueDate, completed, id = crypto.randomUUID()){
     this.title = title;
     this.dueDate = dueDate;
-    this.completed = false;
-    this.id = crypto.randomUUID();
+    this.completed = completed;
+    this.id = id;
     this.priority = 0;
   }
 
@@ -13,9 +12,11 @@ class todo {
   }
 }
 
-function createNewTodo(title, dueDate) {
+function createNewTodo(title, dueDate, completed, id) {
   return new todo(title,
     dueDate,
+    completed,
+    id,
   )
 }
 

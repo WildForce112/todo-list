@@ -1,6 +1,7 @@
 import { Renderer } from "./render.js"
-import { getProjectFromList } from "./projectLogic.js";
+import { projects, getProjectFromList } from "./projectLogic.js";
 import { createNewTodo } from "./todoLogic.js";
+import { populateStorage } from "./storage.js"
 
 const formDisplay = document.querySelector('.hidden');
 const form = document.querySelector('#todo-form');
@@ -40,6 +41,7 @@ function handleTodoEvents() {
       const targetProject = getProject(e);
       const targetTodo = getTodo(e, targetProject);
       targetTodo.changeTodoCompleteState();
+      populateStorage(projects)
       Renderer.renderCompleteState(targetTodo);
     }
     else if(e.target.closest('nav')){
@@ -62,8 +64,10 @@ function handleTodoEvents() {
             e.preventDefault();
             const titleValue = title.value;
             const dueValue = dueDate.value;
-            const newTodo = createNewTodo(titleValue, new Date(dueValue));
+            const day = new Date(dueValue)
+            const newTodo = createNewTodo(titleValue, day.setDate(day.getDate()));
             mainProject.addTodoToProject(newTodo);
+            populateStorage(projects)
             Renderer.renderProject(mainProject);
             resetForm();
           })
