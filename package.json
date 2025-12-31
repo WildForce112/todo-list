@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WildForce112/restaurant-page.git"
+    "url": "git+https://github.com/WildForce112/todo-list.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/WildForce112/restaurant-page/issues"
+    "url": "https://github.com/WildForce112/todo-list/issues"
   },
-  "homepage": "https://github.com/WildForce112/restaurant-page#readme",
+  "homepage": "https://github.com/WildForce112/todo-list#readme",
   "devDependencies": {
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.5",
