@@ -58,6 +58,7 @@ if(!getStorage()){
   School.addTodoToProject(createNewTodo("Finish math homework", day.setHours(day.getHours() + 57)));
   School.addTodoToProject(createNewTodo("Prepare presentation", day.setDate(day.getDate() + 6)));
   projects.push(School);
+  populateStorage(projects);
 }
 else {
   parseProjects(getStorage());
